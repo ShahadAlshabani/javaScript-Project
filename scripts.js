@@ -7,8 +7,13 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 document.getElementById("backButton").addEventListener("click", () => {
-  window.history.back();
+  window.location.href = "index.html";
 });
+
+
+let numLock = 0;
+
+
 function showAlarm() {
   Swal.fire({
     icon: 'info',
@@ -41,6 +46,7 @@ function timeUpAlarm() {
       startCountdown();
       document.querySelector(".custom-card").style.visibility = "visible";
       document.querySelector("#clock").style.color = "white";
+      start();
     }else{
       window.location.href = "index.html";
     }
@@ -51,7 +57,7 @@ function timeUpAlarm() {
 
 
 function startCountdown() {
-  var countDownDate = new Date().getTime() + 120000+2000; //2 min 
+  var countDownDate = new Date().getTime() + 182000; //3 min 
 
   var timer = setInterval(function() {
     var now = new Date().getTime();
@@ -93,3 +99,164 @@ function shakeClock(clock) {
   }, 500); // Adjust the duration of the shake effect (in milliseconds)
 
 }
+
+
+function openPopup(popupId) {
+  var popup = document.getElementById("popup" + popupId);
+  popup.style.display = "block";
+}
+
+function closePopup(popupId) {
+  var popup = document.getElementById("popup" + popupId);
+  popup.style.display = "none";
+}
+function getValueStar(popupId) {
+  
+  var inputValue = document.getElementById("value");
+  var wrongValue = document.getElementById("wrongValue");
+
+  var value = inputValue.value;
+  if(value == 11){
+    var popup = document.getElementById("popup" + popupId);
+    popup.style.display = "none";
+    var unlock = document.getElementById("unlock1");
+    unlock.onclick = null;
+    unlock.style.pointerEvents = "none";
+    var lockElement = document.getElementById("lock1");
+    lockElement.classList.remove("fa-lock"); // Remove the old class
+    lockElement.classList.add("fa-lock-open"); // Add the new class
+    numLock++;
+    if (numLock == 3) {
+      const openDoor = document.getElementById("openDoor");
+      const imgElement = openDoor.querySelector("img");
+      imgElement.setAttribute("src", "./images/open-door.png");
+      imgElement.setAttribute("width", "400px");
+
+    
+    }
+    post();
+    
+  }else{
+    wrongValue.innerText="قيمه خاطئه"
+  }
+}
+function getValueCircle(popupId) {
+  
+  var inputValue = document.getElementById("value1");
+  var wrongValue = document.getElementById("wrongValue1");
+
+  var value = inputValue.value;
+  if(value == 5){
+    var popup = document.getElementById("popup" + popupId);
+    popup.style.display = "none";
+    var unlock = document.getElementById("unlock3");
+    unlock.onclick = null;
+    unlock.style.pointerEvents = "none";
+    var lockElement = document.getElementById("lock3");
+    lockElement.classList.remove("fa-lock"); // Remove the old class
+    lockElement.classList.add("fa-lock-open"); // Add the new class
+    numLock++;
+    if (numLock == 3) {
+      const openDoor = document.getElementById("openDoor");
+      const imgElement = openDoor.querySelector("img");
+      imgElement.setAttribute("src", "./images/open-door.png");
+      imgElement.setAttribute("width", "400px");
+
+    
+    }
+    post();
+    
+  }else{
+    wrongValue.innerText="قيمه خاطئه"
+  }
+}
+
+
+
+
+
+// Get all the switches
+const switches = document.querySelectorAll('input[type="checkbox"]');
+
+// Add event listeners to all switches
+switches.forEach((switchElement) => {
+  switchElement.addEventListener('change', checkAllLampsOn);
+});
+
+// Function to check if all lamps' lights are turned on
+function checkAllLampsOn() {
+  let isSwitch0On = false;
+  let isSwitch2On = false;
+  let isSwitch3On = false;
+  let otherSwitchesOn = false;
+
+  switches.forEach((switchElement, index) => {
+    if (index === 0 && switchElement.checked) {
+      isSwitch0On = true;
+    } else if (index === 2 && switchElement.checked) {
+      isSwitch2On = true;
+    } else if (index === 3 && switchElement.checked) {
+      isSwitch3On = true;
+    } else if (index !== 0 && index !== 2 && index !== 3 && switchElement.checked) {
+      otherSwitchesOn = true;
+    }
+  });
+
+  if (isSwitch0On && isSwitch2On && isSwitch3On && !otherSwitchesOn) {
+    var popup = document.getElementById("popup" + 2);
+    popup.style.display = "none";
+    var unlock = document.getElementById("unlock2");
+    unlock.onclick = null;
+    unlock.style.pointerEvents = "none";
+    var lockElement = document.getElementById("lock2");
+    lockElement.classList.remove("fa-lock"); // Remove the old class
+    lockElement.classList.add("fa-lock-open"); // Add the new class
+    numLock++;
+    if (numLock == 3) {
+      const openDoor = document.getElementById("openDoor");
+      const imgElement = openDoor.querySelector("img");
+      imgElement.setAttribute("src", "./images/open-door.png");
+      imgElement.setAttribute("width", "400px");
+
+    
+    }
+    post();
+  } else {
+    console.log('Not all lamps are turned on.');
+  }
+}
+
+
+function post(){
+fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
+    method: "GET",
+})
+  .then(response => response.json())
+  .then(data => {
+      const imageUrl = data;
+      const randomIndex = Math.floor(Math.random() * imageUrl.length);
+      const randomImageUrl = imageUrl[randomIndex].image;
+
+      
+    const memeImage = document.createElement('img');
+    let imgContent = randomImageUrl;
+    memeImage.setAttribute("src", imgContent);
+    var meme = document.getElementById("meme-container");
+
+    meme.appendChild(memeImage);
+    meme.style.display="block";
+
+    setTimeout(function() {
+      meme.removeChild(memeImage);
+      meme.style.display="none";
+    }, 2000); 
+  
+    })
+    .catch(err => {
+        console.log('====================================');
+        console.log(err);
+        console.log('====================================');
+    });
+  }
+
+  
