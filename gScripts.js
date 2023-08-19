@@ -10,6 +10,14 @@ document.getElementById("backButton").addEventListener("click", () => {
   window.location.href = "index.html";
 });
 
+// Save the last event or form data before navigating away
+window.addEventListener('beforeunload', function(event) {
+  // Get the relevant event or form data
+  var eventData = event;
+
+  // Save the data to Local Storage
+  localStorage.setItem('lastEventData', JSON.stringify(eventData));
+});
 
 let numLock = 0;
 
@@ -43,7 +51,7 @@ function timeUpAlarm() {
     cancelButtonColor: '#d33',
   }).then(function(result) {
     if (result.isConfirmed) {
-      startCountdown();
+      window.location.href = "game.html";
       document.querySelector(".custom-card").style.visibility = "visible";
       document.querySelector("#clock").style.color = "white";
       start();
@@ -127,14 +135,11 @@ function getValueStar(popupId) {
     lockElement.classList.add("fa-lock-open"); // Add the new class
     numLock++;
     if (numLock == 3) {
-      const openDoor = document.getElementById("openDoor");
-      const imgElement = openDoor.querySelector("img");
-      imgElement.setAttribute("src", "./images/open-door.png");
-      imgElement.setAttribute("width", "400px");
-
-    
+      win();   
     }
+    else{
     post();
+    }
     
   }else{
     wrongValue.innerText="قيمه خاطئه"
@@ -157,14 +162,11 @@ function getValueCircle(popupId) {
     lockElement.classList.add("fa-lock-open"); // Add the new class
     numLock++;
     if (numLock == 3) {
-      const openDoor = document.getElementById("openDoor");
-      const imgElement = openDoor.querySelector("img");
-      imgElement.setAttribute("src", "./images/open-door.png");
-      imgElement.setAttribute("width", "400px");
-
-    
+      win();
     }
+    else{
     post();
+    }
     
   }else{
     wrongValue.innerText="قيمه خاطئه"
@@ -213,17 +215,25 @@ function checkAllLampsOn() {
     lockElement.classList.add("fa-lock-open"); // Add the new class
     numLock++;
     if (numLock == 3) {
-      const openDoor = document.getElementById("openDoor");
-      const imgElement = openDoor.querySelector("img");
-      imgElement.setAttribute("src", "./images/open-door.png");
-      imgElement.setAttribute("width", "400px");
-
-    
+      win();
     }
+    else{
     post();
+    }
   } else {
     console.log('Not all lamps are turned on.');
   }
+}
+
+
+function win(){
+  const openDoor = document.getElementById("openDoor");
+  const imgElement = openDoor.querySelector("img");
+  imgElement.setAttribute("src", "./images/open-door.png");
+  imgElement.setAttribute("width", "400px");
+  setTimeout(function() {
+    window.location.href = "treasure.html";
+  }, 3000); 
 }
 
 
@@ -258,5 +268,8 @@ fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
         console.log('====================================');
     });
   }
+
+
+
 
   
