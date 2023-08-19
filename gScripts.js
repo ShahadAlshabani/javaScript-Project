@@ -10,14 +10,6 @@ document.getElementById("backButton").addEventListener("click", () => {
   window.location.href = "index.html";
 });
 
-// Save the last event or form data before navigating away
-window.addEventListener('beforeunload', function(event) {
-  // Get the relevant event or form data
-  var eventData = event;
-
-  // Save the data to Local Storage
-  localStorage.setItem('lastEventData', JSON.stringify(eventData));
-});
 
 let numLock = 0;
 
@@ -137,9 +129,9 @@ function getValueStar(popupId) {
     if (numLock == 3) {
       win();   
     }
-    else{
-    post();
-    }
+    
+    get();
+    
     
   }else{
     wrongValue.innerText="قيمه خاطئه"
@@ -164,9 +156,9 @@ function getValueCircle(popupId) {
     if (numLock == 3) {
       win();
     }
-    else{
-    post();
-    }
+    
+    get();
+    
     
   }else{
     wrongValue.innerText="قيمه خاطئه"
@@ -217,9 +209,9 @@ function checkAllLampsOn() {
     if (numLock == 3) {
       win();
     }
-    else{
-    post();
-    }
+    
+    get();
+    
   } else {
     console.log('Not all lamps are turned on.');
   }
@@ -233,11 +225,11 @@ function win(){
   imgElement.setAttribute("width", "400px");
   setTimeout(function() {
     window.location.href = "treasure.html";
-  }, 3000); 
+  }, 10000); 
 }
 
 
-function post(){
+function get(){
 fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
     method: "GET",
 })
@@ -245,12 +237,13 @@ fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
   .then(data => {
       const imageUrl = data;
       const randomIndex = Math.floor(Math.random() * imageUrl.length);
-      const randomImageUrl = imageUrl[randomIndex].image;
+      const randomImageUrl = imageUrl[randomIndex].url;
 
       
     const memeImage = document.createElement('img');
     let imgContent = randomImageUrl;
     memeImage.setAttribute("src", imgContent);
+
     var meme = document.getElementById("meme-container");
 
     meme.appendChild(memeImage);
@@ -259,7 +252,7 @@ fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
     setTimeout(function() {
       meme.removeChild(memeImage);
       meme.style.display="none";
-    }, 2000); 
+    }, 5000); 
   
     })
     .catch(err => {
