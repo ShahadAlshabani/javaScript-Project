@@ -197,8 +197,10 @@ function checkAllLampsOn() {
   });
 
   if (isSwitch0On && isSwitch2On && isSwitch3On && !otherSwitchesOn) {
-    var popup = document.getElementById("popup" + 2);
-    popup.style.display = "none";
+    setTimeout(function() {
+      var popup = document.getElementById("popup" + 2);
+      popup.style.display = "none";
+        }, 5000); 
     var unlock = document.getElementById("unlock2");
     unlock.onclick = null;
     unlock.style.pointerEvents = "none";
