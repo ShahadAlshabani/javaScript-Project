@@ -200,7 +200,7 @@ function checkAllLampsOn() {
     setTimeout(function() {
       var popup = document.getElementById("popup" + 2);
       popup.style.display = "none";
-        }, 5000); 
+        }, 1000); 
     var unlock = document.getElementById("unlock2");
     unlock.onclick = null;
     unlock.style.pointerEvents = "none";
