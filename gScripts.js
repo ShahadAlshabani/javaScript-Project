@@ -241,20 +241,16 @@ fetch("https://64d8ae885f9bf5b879ce7360.mockapi.io/memes", {
       const randomIndex = Math.floor(Math.random() * imageUrl.length);
       const randomImageUrl = imageUrl[randomIndex].url;
 
-      
-    const memeImage = document.createElement('img');
     let imgContent = randomImageUrl;
-    memeImage.setAttribute("src", imgContent);
 
-    var meme = document.getElementById("meme-container");
-
-    meme.appendChild(memeImage);
-    meme.style.display="block";
-
-    setTimeout(function() {
-      meme.removeChild(memeImage);
-      meme.style.display="none";
-    }, 5000); 
+    Swal.fire({
+      imageUrl: imgContent,
+      imageWidth: 400,
+      imageHeight: 300,
+      timer: 3000,
+      showConfirmButton: false
+    })
+    
   
     })
     .catch(err => {
